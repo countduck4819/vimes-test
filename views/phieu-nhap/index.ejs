@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách phiếu nhập kho</title>
+
+  <link rel="stylesheet" href="/stylesheets/phieu-nhap/style.css">
+</head>
+
+<body>
+  <h1>Danh sách phiếu nhập kho</h1>
+
+  <% if (msg && msg.length > 0) { %>
+    <div class="message success"><%= msg[0] %></div>
+  <% } %> 
+
+  <% if (error && error.length > 0) { %>
+    <div class="message error"><%= error[0] %></div>
+  <% } %>
+
+  <a href="/phieu-nhap/add">+ Thêm phiếu nhập kho</a>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Số phiếu</th>
+        <th>Ngày lập</th>
+        <th>Đơn vị</th>
+        <th>Bộ phận</th>
+        <th>Kho</th>
+        <th>Người giao hàng</th>
+        <th>Người lập</th>
+        <th>Tổng tiền</th>
+        <th>Chi tiết</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% if (phieuNhaps.length === 0) { %>
+        <tr>
+          <td colspan="9">Chưa có phiếu nhập nào</td>
+        </tr>
+      <% } %>
+
+      <% phieuNhaps.forEach(item => { %>
+        <tr>
+          <td><%= item.so_phieu %></td>
+          <td><%= item.ngay_lap_phieu.toISOString().slice(0, 10) %></td>
+          <td><%= item.ten_don_vi %></td>
+          <td><%= item.ten_bo_phan %></td>
+          <td><%= item.ten_kho %></td>
+          <td><%= item.ten_nguoi_giao_hang %></td>
+          <td><%= item.nguoi_lap_phieu %></td>
+          <td><%= Number(item.tong_tien).toLocaleString('vi-VN') %> đ</td>
+          <td>
+            <a href="/phieu-nhap/<%= item.so_phieu %>">Xem</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

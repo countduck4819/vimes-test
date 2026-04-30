@@ -1,0 +1,59 @@
+body {
+    font-size: 0.875rem;
+    padding: 1.25rem;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+.phieu {
+    max-width: 62.5rem;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    margin: 1.25rem 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.25rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.9375rem;
+}
+
+th,
+td {
+    border: 0.0625rem solid #333;
+    padding: 0.4375rem;
+    vertical-align: top;
+}
+
+th {
+    background-color: #eee;
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.signatures {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    margin-top: 2.1875rem;
+    gap: 1.25rem;
+}

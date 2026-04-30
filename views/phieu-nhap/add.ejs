@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thêm phiếu nhập kho</title>
+
+  <link rel="stylesheet" href="/stylesheets/phieu-nhap/add.css">
+</head>
+
+<body>
+  <h1>Thêm phiếu nhập kho</h1>
+
+  <a href="/phieu-nhap">← Quay lại danh sách</a>
+
+  <% if (error && error.length > 0) { %>
+    <div class="message"><%= error[0] %></div>
+  <% } %>
+
+  <form action="/phieu-nhap/add" method="POST">
+    <h3>Thông tin phiếu</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Số phiếu</label>
+        <input type="text" name="so_phieu" required>
+      </div>
+
+      <div class="form-group">
+        <label>Ngày lập phiếu</label>
+        <input type="date" name="ngay_lap_phieu" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Đơn vị</label>
+        <select name="ma_don_vi" required>
+          <% donVis.forEach(item => { %>
+            <option value="<%= item.ma_don_vi %>">
+              <%= item.ten_don_vi %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Bộ phận</label>
+        <select name="ma_bo_phan" required>
+          <% boPhans.forEach(item => { %>
+            <option value="<%= item.ma_bo_phan %>">
+              <%= item.ten_bo_phan %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tài khoản nợ</label>
+        <select name="ma_tai_khoan_no" required>
+          <% taiKhoans.forEach(item => { %>
+            <option value="<%= item.ma_tai_khoan %>">
+              <%= item.ma_tai_khoan %> - <%= item.ten_tai_khoan %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tài khoản có</label>
+        <select name="ma_tai_khoan_co" required>
+          <% taiKhoans.forEach(item => { %>
+            <option value="<%= item.ma_tai_khoan %>">
+              <%= item.ma_tai_khoan %> - <%= item.ten_tai_khoan %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Số chứng từ</label>
+        <input type="text" name="so_chung_tu">
+      </div>
+
+      <div class="form-group">
+        <label>Ngày chứng từ</label>
+        <input type="date" name="ngay_chung_tu">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Kho nhập</label>
+        <select name="ma_kho" required>
+          <% khos.forEach(item => { %>
+            <option value="<%= item.ma_kho %>">
+              <%= item.ten_kho %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Người giao hàng</label>
+        <input type="text" name="ten_nguoi_giao_hang" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+            <label>Người lập phiếu</label>
+            <select name="ma_nguoi_lap_phieu" required>
+            <% nguoiLapPhieus.forEach(item => { %>
+                <option value="<%= item.ma_nhan_vien %>">
+                <%= item.ho_ten_nhan_vien %>
+                </option>
+            <% }) %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Thủ kho</label>
+            <select name="ma_thu_kho" required>
+            <% thuKhos.forEach(item => { %>
+                <option value="<%= item.ma_nhan_vien %>">
+                <%= item.ho_ten_nhan_vien %>
+                </option>
+            <% }) %>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+    <div class="form-group">
+        <label>Kế toán trưởng</label>
+        <select name="ma_ke_toan_truong" required>
+        <% keToanTruongs.forEach(item => { %>
+            <option value="<%= item.ma_nhan_vien %>">
+            <%= item.ho_ten_nhan_vien %>
+            </option>
+        <% }) %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Số chứng từ gốc kèm theo</label>
+        <input type="text" name="so_chung_tu_goc_kem_theo">
+    </div>
+    </div>
+
+    <h3>Chi tiết vật tư</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Vật tư</th>
+          <th>SL theo chứng từ</th>
+          <th>SL thực nhập</th>
+          <th>Đơn giá</th>
+          <th>Xóa</th>
+        </tr>
+      </thead>
+
+      <tbody id="detailBody">
+        <tr>
+          <td>
+            <select name="chi_tiet[0][ma_vat_tu]" required>
+              <% vatTus.forEach(item => { %>
+                <option value="<%= item.ma_vat_tu %>">
+                  <%= item.ma_vat_tu %> - <%= item.ten_vat_tu %>
+                </option>
+              <% }) %>
+            </select>
+          </td>
+
+          <td>
+            <input type="number" name="chi_tiet[0][so_luong_theo_chung_tu]" step="1" value="0">
+          </td>
+
+          <td>
+            <input type="number" name="chi_tiet[0][so_luong_thuc_nhap]" step="1" required>
+          </td>
+
+          <td>
+            <input type="number" name="chi_tiet[0][don_gia]" step="1" required>
+          </td>
+
+          <td>
+            <button type="button" class="btn-remove" onclick="removeRow(this)">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" onclick="addRow()">+ Thêm dòng</button>
+
+    <br>
+
+    <button type="submit">Lưu phiếu nhập</button>
+  </form>
+
+  <script>
+    let rowIndex = 1
+
+    function addRow() {
+      const tbody = document.getElementById('detailBody')
+      const tr = document.createElement('tr')
+
+      tr.innerHTML = `
+        <td>
+          <select name="chi_tiet[${rowIndex}][ma_vat_tu]" required>
+            <% vatTus.forEach(item => { %>
+              <option value="<%= item.ma_vat_tu %>">
+                <%= item.ma_vat_tu %> - <%= item.ten_vat_tu %>
+              </option>
+            <% }) %>
+          </select>
+        </td>
+
+        <td>
+          <input type="number" name="chi_tiet[${rowIndex}][so_luong_theo_chung_tu]" step="1" value="0">
+        </td>
+
+        <td>
+          <input type="number" name="chi_tiet[${rowIndex}][so_luong_thuc_nhap]" step="1" required>
+        </td>
+
+        <td>
+          <input type="number" name="chi_tiet[${rowIndex}][don_gia]" step="1" required>
+        </td>
+
+        <td>
+          <button type="button" class="btn-remove" onclick="removeRow(this)">Xóa</button>
+        </td>
+      `
+
+      tbody.appendChild(tr)
+      rowIndex++
+    }
+
+    function removeRow(button) {
+      const tbody = document.getElementById('detailBody')
+
+      if (tbody.children.length === 1) {
+        alert('Phải có ít nhất một dòng vật tư')
+        return
+      }
+
+      button.closest('tr').remove()
+    }
+  </script>
+</body>
+</html>

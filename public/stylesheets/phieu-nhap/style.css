@@ -1,0 +1,48 @@
+body {
+    font-size: 0.875rem;
+    padding: 1.25rem;
+}
+
+h1 {
+    margin-bottom: 0.9375rem;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.message {
+    padding: 0.625rem;
+    margin-bottom: 0.9375rem;
+    border: 0.0625rem solid #ccc;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.9375rem;
+}
+
+th,
+td {
+    border: 0.0625rem solid #333;
+    padding: 0.4375rem;
+    text-align: left;
+}
+
+th {
+    background-color: #eee;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết phiếu nhập kho</title>
+
+  <link rel="stylesheet" href="/stylesheets/phieu-nhap/detail.css">
+</head>
+
+<body>
+  <div class="phieu">
+    <a href="/phieu-nhap">← Quay lại danh sách</a>
+
+    <div class="row">
+      <div>
+        <p><strong>Đơn vị:</strong> <%= phieu.ten_don_vi %></p>
+        <p><strong>Bộ phận:</strong> <%= phieu.ten_bo_phan %></p>
+      </div>
+
+      <div>
+        <p><strong>Số phiếu:</strong> <%= phieu.so_phieu %></p>
+      </div>
+    </div>
+
+    <div class="title">
+      <h2>PHIẾU NHẬP KHO</h2>
+      <p>
+        Ngày <%= phieu.ngay_lap_phieu.getDate() %>
+        tháng <%= phieu.ngay_lap_phieu.getMonth() + 1 %>
+        năm <%= phieu.ngay_lap_phieu.getFullYear() %>
+      </p>
+    </div>
+
+    <p>
+      <strong>Nợ:</strong>
+      <%= phieu.ma_tai_khoan_no %> - <%= phieu.ten_tai_khoan_no %>
+    </p>
+
+    <p>
+      <strong>Có:</strong>
+      <%= phieu.ma_tai_khoan_co %> - <%= phieu.ten_tai_khoan_co %>
+    </p>
+
+    <p><strong>Họ tên người giao:</strong> <%= phieu.ten_nguoi_giao_hang %></p>
+
+    <p>
+      <strong>Theo chứng từ số:</strong>
+      <%= phieu.so_chung_tu || '' %>
+
+      <% if (phieu.ngay_chung_tu) { %>
+        ngày <%= phieu.ngay_chung_tu.toISOString().slice(0, 10) %>
+      <% } %>
+    </p>
+
+    <p>
+      <strong>Nhập tại kho:</strong>
+      <%= phieu.ten_kho %>
+      <% if (phieu.dia_diem_kho) { %>
+        - <%= phieu.dia_diem_kho %>
+      <% } %>
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên, nhãn hiệu, quy cách, phẩm chất vật tư</th>
+          <th>Mã số</th>
+          <th>Đơn vị tính</th>
+          <th>SL theo chứng từ</th>
+          <th>SL thực nhập</th>
+          <th>Đơn giá</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% let tongTien = 0 %>
+
+        <% chiTiet.forEach((item, index) => { %>
+          <% tongTien = tongTien + Number(item.thanh_tien) %>
+
+          <tr>
+            <td class="text-center"><%= index + 1 %></td>
+
+            <td>
+              <%= item.ten_vat_tu %>
+
+              <% if (item.nhan_hieu_vat_tu) { %>
+                - <%= item.nhan_hieu_vat_tu %>
+              <% } %>
+
+              <% if (item.quy_cach_vat_tu) { %>
+                - <%= item.quy_cach_vat_tu %>
+              <% } %>
+
+              <% if (item.pham_chat_vat_tu) { %>
+                - <%= item.pham_chat_vat_tu %>
+              <% } %>
+            </td>
+
+            <td><%= item.ma_vat_tu %></td>
+            <td><%= item.ten_don_vi_tinh %></td>
+            <td class="text-right"><%= Number(item.so_luong_theo_chung_tu).toLocaleString('vi-VN') %></td>
+            <td class="text-right"><%= Number(item.so_luong_thuc_nhap).toLocaleString('vi-VN') %></td>
+            <td class="text-right"><%= Number(item.don_gia).toLocaleString('vi-VN') %></td>
+            <td class="text-right"><%= Number(item.thanh_tien).toLocaleString('vi-VN') %></td>
+          </tr>
+        <% }) %>
+
+        <tr>
+          <td colspan="7" class="text-right"><strong>Tổng cộng</strong></td>
+          <td class="text-right">
+            <strong><%= tongTien.toLocaleString('vi-VN') %></strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>Tổng số tiền:</strong>
+      <%= tongTien.toLocaleString('vi-VN') %> đồng
+    </p>
+
+    <p>
+      <strong>Số chứng từ gốc kèm theo:</strong>
+      <%= phieu.so_chung_tu_goc_kem_theo || '' %>
+    </p>
+
+    <div class="signatures">
+      <div>
+        <strong>Người lập phiếu</strong>
+        <p><%= phieu.nguoi_lap_phieu %></p>
+      </div>
+
+      <div>
+        <strong>Người giao hàng</strong>
+        <p><%= phieu.ten_nguoi_giao_hang %></p>
+      </div>
+
+      <div>
+        <strong>Thủ kho</strong>
+        <p><%= phieu.thu_kho %></p>
+      </div>
+
+      <div>
+        <strong>Kế toán trưởng</strong>
+        <p><%= phieu.ke_toan_truong %></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
