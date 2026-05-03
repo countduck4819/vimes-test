@@ -140,7 +140,7 @@ ALTER TABLE "chi_tiet_phieu_nhap" ADD FOREIGN KEY ("ma_vat_tu") REFERENCES "vat_
 
 
 
--- -- Fake data
+-- -- insert fake data
 -- -- don_vi
 -- INSERT INTO don_vi (ma_don_vi, ten_don_vi)
 -- VALUES
